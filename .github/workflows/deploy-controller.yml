@@ -1,9 +1,11 @@
+name: Build and deploy landing page
+
 on:
   push:
     paths:
       - controller/**
 jobs:
-  rsync:
+  Build and Deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
