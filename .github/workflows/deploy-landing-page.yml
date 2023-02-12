@@ -1,0 +1,14 @@
+on: [push]
+jobs:
+  rsync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: up9cloud/action-rsync@master
+        env:
+          HOST: ${{secrets.DEPLOY_HOST}}
+          KEY: ${{secrets.DEPLOY_SSH_KEY}}
+          USER: ${{secrets.DEPLOY_USER}}
+          SOURCE: ./landing-page
+          TARGET: ${{secrets.DEPLOY_SOURCE_LANDING_PAGE}}
+          ARGS_MORE: --exclude=/controller/
