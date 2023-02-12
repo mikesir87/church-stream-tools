@@ -1,4 +1,7 @@
-on: [push]
+on:
+  push:
+    paths:
+      - landing-page/**
 jobs:
   rsync:
     runs-on: ubuntu-latest
