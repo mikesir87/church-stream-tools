@@ -18,5 +18,5 @@ jobs:
           HOST: ${{secrets.DEPLOY_HOST}}
           KEY: ${{secrets.DEPLOY_SSH_KEY}}
           USER: ${{secrets.DEPLOY_USER}}
-          SOURCE: ./landing-page/controller/build/*
+          SOURCE: ./controller/build/*
           TARGET: ${{secrets.DEPLOY_SOURCE_LANDING_PAGE}}/controller
