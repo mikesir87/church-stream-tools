@@ -1,4 +1,4 @@
-name: Build and deploy landing page
+name: Build and deploy controller
 
 on:
   push:
