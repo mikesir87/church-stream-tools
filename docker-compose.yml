@@ -1,0 +1,31 @@
+services:
+  proxy:
+    image: traefik:v2.9
+    command: --providers.docker
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    
+
+  landing-page:
+    image: php:apache
+    volumes:
+      - ./landing-page:/var/www/html
+    labels:
+      traefik.http.routers.landing.rule: Host(`localhost`)
+
+  controller:
+    image: node:lts-alpine
+    command: yarn dev
+    working_dir: /usr/local/app
+    ports:
+      - 3000:3000
+    volumes:
+      - ./controller:/usr/local/app
+      - $HOME/.yarn:/root/.yarn
+    environment:
+      YARN_CACHE_FOLDER: /root/.yarn
+    labels:
+      traefik.http.routers.controller.rule: Host(`localhost`) && PathPrefix(`/controller`)
+      traefik.http.services.controller.loadbalancer.server.port: 3000
