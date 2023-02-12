@@ -1,0 +1,11 @@
+site_name: Stream Tools Docs
+site_url: https://stream-tools.blacksburglds.com/docs/
+theme:
+  name: material
+  font:
+    text: Open Sans
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences

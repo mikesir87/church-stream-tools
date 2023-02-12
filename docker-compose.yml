@@ -29,3 +29,11 @@ services:
     labels:
       traefik.http.routers.controller.rule: Host(`localhost`) && PathPrefix(`/controller`)
       traefik.http.services.controller.loadbalancer.server.port: 3000
+
+  docs:
+    image: ghcr.io/afritzler/mkdocs-material
+    volumes:
+      - ./docs:/docs
+    labels:
+      traefik.http.routers.docs.rule: Host(`localhost`) && (PathPrefix(`/docs`) || PathPrefix(`/livereload`))
+      traefik.http.services.docs.loadbalancer.server.port: 8000
