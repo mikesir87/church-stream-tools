@@ -118,7 +118,7 @@
                             Download and unzip it somewhere on your machine.
                           </p>
                           <p>
-                          <a class="btn btn-secondary" href="#">Download here (zip)</a>
+                          <a class="btn btn-secondary" href="/releases/scenes-0.1.0.zip">Download here (zip)</a>
                           </p>
                         </div>
                     </div>
