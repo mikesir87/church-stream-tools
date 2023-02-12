@@ -32,7 +32,7 @@ export const LoginForm = () => {
                 <p>Provide connection details below to connect to OBS.</p>
 
                 <Alert variant="info">
-                  Need help finding the login info? <a href="#" onClick={() => setShowHelpModal(true)}>Click here for additional info</a>
+                  Need help finding the login info? <Button variant="link" size="sm" onClick={() => setShowHelpModal(true)}>Click here for additional info</Button>
                 </Alert>
 
                 <Form onSubmit={connectCallback}>
