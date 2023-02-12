@@ -1,9 +1,9 @@
 name: Deploy docs
 
-on:
-  push:
-    paths:
-      - docs/**
+on: ["push"]
+  # push:
+    # paths:
+    #   - docs/**
 jobs:
   Deploy:
     runs-on: ubuntu-latest
