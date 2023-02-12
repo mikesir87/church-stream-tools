@@ -18,7 +18,7 @@ jobs:
           path: .cache
       - run: pip install mkdocs-material 
       - run: mkdocs build
-        working_dir: docs
+        working-directory: docs
       - uses: up9cloud/action-rsync@master
         env:
           HOST: ${{secrets.DEPLOY_HOST}}
