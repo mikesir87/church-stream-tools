@@ -220,7 +220,7 @@
     <footer class="footer py-4 bg-light">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-4 text-lg-start">Copyright &copy; Michael Irwin 2022</div>
+                <div class="col-lg-4 text-lg-start">Copyright &copy; Michael Irwin 2023</div>
                 <div class="col-lg-4 my-3 my-lg-0">
                     <a class="btn btn-dark btn-social mx-2" href="https://github.com/mikesir87/church-stream-tools" aria-label="GitHub"><i class="fab fa-github"></i></a>
                 </div>
