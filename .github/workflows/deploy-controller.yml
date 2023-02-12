@@ -1,0 +1,22 @@
+on: [push]
+jobs:
+  rsync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+          cache-dependency-path: '**/yarn.lock'
+      - run: yarn install --frozen-lockfile
+        working-directory: ./controller
+      - run: yarn build
+        working-directory: ./controller
+      - uses: up9cloud/action-rsync@master
+        env:
+          HOST: ${{secrets.DEPLOY_HOST}}
+          KEY: ${{secrets.DEPLOY_SSH_KEY}}
+          USER: ${{secrets.DEPLOY_USER}}
+          SOURCE: ./landing-page/controller/*
+          TARGET: ${{secrets.DEPLOY_SOURCE_LANDING_PAGE}}/controller
