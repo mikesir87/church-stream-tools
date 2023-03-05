@@ -5,6 +5,7 @@ import { useStreamProps } from "./StreamContext";
 import { BigButton } from "./BigButton";
 import { HymnButtons } from "./HymnButtons";
 import { ShowHymnButton } from "./ShowHymnButton";
+import { ShowName } from "./ShowName";
 
 export const SceneChanger : FC = () => {
     return (
@@ -27,7 +28,7 @@ const SceneChangingButtons : FC = () => {
         return (
             <>
                 <ShowHymnButton />
-                {/* <ShowName /> */}
+                <ShowName />
                 <BigButton text="Pause Stream" onClick={startSacramentPause} />
                 <BigButton text="End Stream" variant="danger" onClick={endStream} requireVerification />
             </>
