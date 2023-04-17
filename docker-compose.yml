@@ -1,22 +1,31 @@
 services:
   proxy:
     image: traefik:v2.9
-    command: --providers.docker
+    command: --providers.docker --api.insecure --api.dashboard
     ports:
       - 80:80
+      - 8080:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     
 
+  redirector:
+    build: ./
+    volumes:
+      - ./redirector:/var/www/html
+    labels:
+      traefik.http.routers.redirector.rule: Host(`localhost`)
+    
+
   landing-page:
-    image: php:apache
+    build: ./
     volumes:
       - ./landing-page:/var/www/html
     labels:
-      traefik.http.routers.landing.rule: Host(`localhost`)
+      traefik.http.routers.landing.rule: Host(`tools.localhost`)
 
   controller:
-    image: node:lts-alpine
+    build: ./
     command: yarn dev
     working_dir: /usr/local/app
     ports:
@@ -27,7 +36,7 @@ services:
     environment:
       YARN_CACHE_FOLDER: /root/.yarn
     labels:
-      traefik.http.routers.controller.rule: Host(`localhost`) && PathPrefix(`/controller`)
+      traefik.http.routers.controller.rule: Host(`tools.localhost`) && PathPrefix(`/controller`)
       traefik.http.services.controller.loadbalancer.server.port: 3000
 
   docs:
@@ -35,5 +44,5 @@ services:
     volumes:
       - ./docs:/docs
     labels:
-      traefik.http.routers.docs.rule: Host(`localhost`) && (PathPrefix(`/docs`) || PathPrefix(`/livereload`))
+      traefik.http.routers.docs.rule: Host(`tools.localhost`) && (PathPrefix(`/docs`) || PathPrefix(`/livereload`))
       traefik.http.services.docs.loadbalancer.server.port: 8000

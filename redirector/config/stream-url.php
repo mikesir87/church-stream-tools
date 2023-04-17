@@ -1,0 +1,1 @@
+<?php define('STREAM_REDIRECT_URL', 'https://churchofjesuschrist.org');

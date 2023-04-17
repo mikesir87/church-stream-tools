@@ -1,0 +1,1 @@
+<?php define('DATA_PASSWORD', 'secret-password');

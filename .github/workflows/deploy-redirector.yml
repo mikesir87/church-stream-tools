@@ -1,0 +1,23 @@
+name: Deploy redirector
+
+on:
+  push:
+    paths:
+      - redirector/**
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: create/override config files
+        run: |
+          mkdir -p redirector-config
+          echo "<?php define('DATA_PASSWORD', '$STREAM_DATA_PASSWORD');" > redirector/config/stream-data-pw.php
+          echo "<?php define('STREAM_REDIRECT_URL', '$STREAM_REDIRECT_URL');" > redirector/config/stream-url.php
+      - uses: up9cloud/action-rsync@master
+        env:
+          HOST: ${{secrets.DEPLOY_HOST}}
+          KEY: ${{secrets.DEPLOY_SSH_KEY}}
+          USER: ${{secrets.DEPLOY_USER}}
+          SOURCE: ./redirector/*
+          TARGET: ${{secrets.DEPLOY_SOURCE_REDIRECTOR}}
