@@ -4,16 +4,22 @@ on:
   push:
     paths:
       - redirector/**
+  workflow_dispatch:
+
 jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: create/override config files
+        shell: bash
         run: |
           mkdir -p redirector-config
           echo "<?php define('DATA_PASSWORD', '$STREAM_DATA_PASSWORD');" > redirector/config/stream-data-pw.php
           echo "<?php define('STREAM_REDIRECT_URL', '$STREAM_REDIRECT_URL');" > redirector/config/stream-url.php
+        env:
+          STREAM_DATA_PASSWORD: ${{secrets.STREAM_DATA_PASSWORD}}
+          STREAM_REDIRECT_URL: ${{secrets.STREAM_REDIRECT_URL}}
       - uses: up9cloud/action-rsync@master
         env:
           HOST: ${{secrets.DEPLOY_HOST}}
