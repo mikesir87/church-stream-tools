@@ -1,7 +1,6 @@
 import { FC } from "react";
 import Container from "react-bootstrap/Container";
 import { useStreamProps } from "./StreamContext";
-import { FixCameraDisplay } from "./FixCameraDisplay";
 import { LiveView } from "./LiveView";
 import { SceneChanger } from "./SceneChanger";
 import { StreamStatusDisplay } from "./StreamStatusDisplay";
