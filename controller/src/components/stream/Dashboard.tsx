@@ -21,7 +21,7 @@ export const Dashboard : FC = () => {
             <StreamStatusDisplay />
             <SceneChanger />
             <LiveView />
-            <FixCameraDisplay />
+            {/* <FixCameraDisplay /> */}
         </Container>
     )
 };
