@@ -35,8 +35,8 @@ export const HymnButtons : FC = () => {
 
     return (
         <>
-            <BigButton text="Prev Verse" onClick={handlePrevClick} variant="secondary" />
-            <BigButton text="Next Verse" onClick={handleNextClick} />
+            <BigButton text="Prev verse" onClick={handlePrevClick} variant="secondary" />
+            <BigButton text="Next verse" onClick={handleNextClick} />
         </>
     )
 }

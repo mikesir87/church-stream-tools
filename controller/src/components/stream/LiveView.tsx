@@ -1,5 +1,4 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { useStreamProps } from "./StreamContext";
@@ -42,13 +41,17 @@ export const LiveView : FC = () => {
         <>
             <Row className="text-center">
                 <div className="mb-3">
-                    <img src={imageSrc} className="img-fluid" alt="Stream preview screenshot" />
+                    <img 
+                        src={imageSrc} 
+                        className="img-fluid" 
+                        alt="Stream preview screenshot" 
+                        onClick={onRefresh}
+                    />
                 </div>
             </Row>
             <Row className="text-center mb-3">
                 <Col>
                     Next refresh in { refreshTimer }
-                    <Button variant="secondary" onClick={onRefresh} className="ms-2">Refresh Now</Button>
                 </Col>
             </Row>
         </>

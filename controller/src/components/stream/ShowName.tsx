@@ -35,7 +35,7 @@ export const ShowName : FC = () => {
 
     return (
         <>
-            <BigButton text="Show Name" onClick={handleClick} />
+            <BigButton text="Show name" onClick={handleClick} />
         </>
     );
 }

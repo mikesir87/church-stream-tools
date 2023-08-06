@@ -29,7 +29,7 @@ export const ShowHymnButton : FC = () => {
 
     return (
         <>
-            <BigButton text="Show Hymn" onClick={handleHymnClick} />
+            <BigButton text="Show hymn" onClick={handleHymnClick} />
 
             <Modal show={showHymnEntryModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>

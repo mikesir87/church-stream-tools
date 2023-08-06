@@ -7,7 +7,7 @@ import "./BigButton.css";
 interface BigButtonProps {
     text: string;
     onClick: () => void;
-    requireVerification?: boolean;
+    requireVerification?: string;
     variant?: "primary" | "secondary" | "danger" | "warning" | "success";
 }
 
@@ -15,7 +15,7 @@ export const BigButton : FC<BigButtonProps> = ({ text, onClick, requireVerificat
     const { isTransitioning } = useStreamProps();
 
     const handleClick = useCallback(() => {
-        if (requireVerification === undefined || window.confirm("Are you sure?"))
+        if (requireVerification === undefined || window.confirm(`Are you sure you want to ${requireVerification}?`))
             onClick();
     }, [onClick, requireVerification]);
 

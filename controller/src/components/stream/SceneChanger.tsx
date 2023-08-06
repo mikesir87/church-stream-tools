@@ -29,8 +29,8 @@ const SceneChangingButtons : FC = () => {
             <>
                 <ShowHymnButton />
                 <ShowName />
-                <BigButton text="Pause Stream" onClick={startSacramentPause} />
-                <BigButton text="End Stream" variant="danger" onClick={endStream} requireVerification />
+                <BigButton text="Pause stream" onClick={startSacramentPause} requireVerification="pause the stream" />
+                <BigButton text="End stream" variant="danger" onClick={endStream} requireVerification="end the stream" />
             </>
         )
     }
