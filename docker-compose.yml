@@ -25,7 +25,7 @@ services:
       traefik.http.routers.landing.rule: Host(`tools.localhost`)
 
   controller:
-    build: ./
+    image: node:lts-alpine
     command: yarn dev
     working_dir: /usr/local/app
     ports:
