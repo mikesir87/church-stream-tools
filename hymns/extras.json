@@ -1,0 +1,18 @@
+[
+	{
+		"number": "CTF",
+		"title": "Come, Thou Fount of Every Blessing",
+		"verses": [
+			{
+				"id": "CTF1",
+				"verse": 1,
+				"text": "Come, thou Fount of every blessing;\r\nTune my heart to sing they grace;\r\nStreams of mercy, never ceasing,\r\nCall for songs of loudest praise.\r\nTeach me some melodious sonnet,\r\nSung by flaming tongues above;\r\nPraise the mount; I'm fixed upon it:\r\n Mount of they redeeming love."
+			},
+			{
+				"id": "CTF2",
+				"verse": 2,
+				"text": "O to grace how great a debtor\r\nDaily I'm constrained to be!\r\nLet they goodness, as a fetter,\r\nBind my wandering heart to thee.\r\nProne to wander, Lord, I feel it,\r\nProne to leave the God I love;\r\nHere's my heart, O take and seal it;\r\nSeal it for they courts above."
+			}
+		]
+	}
+]

@@ -39,6 +39,13 @@ services:
       traefik.http.routers.controller.rule: Host(`tools.localhost`) && PathPrefix(`/controller`)
       traefik.http.services.controller.loadbalancer.server.port: 3000
 
+  hymns:
+    build: ./
+    volumes:
+      - ./hymns:/var/www/html
+    labels:
+      traefik.http.routers.hymns.rule: Host(`hymns.localhost`)
+
   docs:
     image: ghcr.io/afritzler/mkdocs-material
     volumes:

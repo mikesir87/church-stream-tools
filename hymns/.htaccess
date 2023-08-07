@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^([0-9A-Z]+)$ index.php?hymn=$1 [L]
