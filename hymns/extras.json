@@ -14,5 +14,21 @@
 				"text": "O to grace how great a debtor\r\nDaily I'm constrained to be!\r\nLet they goodness, as a fetter,\r\nBind my wandering heart to thee.\r\nProne to wander, Lord, I feel it,\r\nProne to leave the God I love;\r\nHere's my heart, O take and seal it;\r\nSeal it for they courts above."
 			}
 		]
+	},
+	{
+		"number": "PAC",
+		"title": "Picture a Christmas",
+		"verses": [
+			{
+				"id": "PAC1",
+				"verse": 1,
+				"text": "Picture a stable in Judea.\nPicture a sacred, silent night.\nAnd can you hear\nThe angels near\nAnd see the star so bright?\nPicture the little baby Jesus.\nThink of his life and words so dear.\nSing praise to him;\nRemember him,\nAs you picture Christmas this year."
+			},
+			{
+				"id": "PAC2",
+				"verse": 2,
+				"text": "Picture the kind and gentle Joseph.\nPicture the mother, Mary, fair.\nAnd can you see\nSo rev’rently\nThe shepherds kneeling there?\nPicture the little baby Jesus.\nThink of his life and words so dear.\nSing praise to him;\nRemember him,\nAs you picture Christmas this year."
+			}
+		]
 	}
 ]
