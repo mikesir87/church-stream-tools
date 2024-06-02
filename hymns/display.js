@@ -26,25 +26,29 @@
         const clonedNode = currentVerseNode.cloneNode(true);
         clonedNode.id = "text-display";
         clonedNode.classList.remove("hide");
-        currentVerseNode.classList.remove("hide");
         currentVerseNode.parentElement.appendChild(clonedNode);
+        
+        const maxHeight = window.innerHeight;
+        
+        let fontSize = 20;
+        clonedNode.style.fontSize = fontSize + "px";
 
-        let height = clonedNode.getBoundingClientRect().y + clonedNode.getBoundingClientRect().height;
-        let fontSize = 40;
-        while (height < 1080 && fontSize < 60) {
-            clonedNode.style.fontSize = fontSize++ + "px";
-            height = clonedNode.getBoundingClientRect().y + clonedNode.getBoundingClientRect().height;
+        while (document.documentElement.scrollHeight <= maxHeight && fontSize < 60) {
+            clonedNode.style.fontSize = ++fontSize + "px";
         }
 
+        if (fontSize > 20) fontSize--;
+        
+        currentVerseNode.classList.remove("hide");
         currentVerseNode.parentElement.removeChild(clonedNode);
 
         currentVerseNode.style.fontSize = fontSize + "px";
     }
 
     document.addEventListener("keyup", (e) => {
-        if (e.keyCode === 39)
+        if (e.key === "ArrowRight")
             goToNext();
-        if (e.keyCode === 37)
+        if (e.key === "ArrowLeft")
             goToPrev();
     });
 

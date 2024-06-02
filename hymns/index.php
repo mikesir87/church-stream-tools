@@ -39,7 +39,7 @@ foreach ($hymn->verses as $verse) {
 
         <?php foreach ($hymn->verses as $index => $verse): ?>
             <div id="verse-<?= $index + 1?>" class="verse">
-                <p><?= $index + 1 ?>. <?= $verse->splitText[0] ?></p>
+                <p><span class="verse-number"><?= $index + 1 ?>.</span> <?= $verse->splitText[0] ?></p>
                 <?php for ($i = 1; $i < count($verse->splitText); $i++) : ?>
                     <p><?= $verse->splitText[$i] ?></p>
                 <?php endfor ?>
