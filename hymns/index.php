@@ -22,8 +22,10 @@ foreach ($hymn->verses as $verse) {
 ?><!DOCTYPE html>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@400;500&display=swap" rel="stylesheet">
     <style type="text/css">
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
         body { background: rgb(106, 168, 79); color: white; font-family: "Open Sans", sans-serif; }
         .hide { display: none; }
         h1 { text-align: center; font-size: 40px; }
