@@ -15,15 +15,14 @@ export const ShowName : FC = () => {
             const speakerDetails = { ...speakerName.inputSettings, text: name };
             await obs.call("SetInputSettings", { inputName: SOURCE_SPEAKER_NAME, inputSettings: speakerDetails });
 
-            const speakerTitle = await obs.call("GetInputSettings", { inputName: SOURCE_SPEAKER_TITLE });
-            // const speakerTitleDetails = { ...speakerTitle.inputSettings, text: name };
-            await obs.call("SetInputSettings", { inputName: SOURCE_SPEAKER_TITLE, inputSettings: speakerTitle });
-
-            const group = await obs.call("GetSceneItemId", { sceneName: SCENE_CAMERA, sourceName: SOURCE_SPEAKER_NAME_GROUP });
-            await obs.call("SetSceneItemEnabled", { sceneName: SCENE_CAMERA, sceneItemId: group.sceneItemId, sceneItemEnabled: true});
+            const nameItem = await obs.call("GetSceneItemId", { sceneName: SCENE_CAMERA, sourceName: "Speaker Name" });
+            const gradientItem = await obs.call("GetSceneItemId", { sceneName: SCENE_CAMERA, sourceName: "Bottom bar gradient" });
+            await obs.call("SetSceneItemEnabled", { sceneName: SCENE_CAMERA, sceneItemId: nameItem.sceneItemId, sceneItemEnabled: true});
+            await obs.call("SetSceneItemEnabled", { sceneName: SCENE_CAMERA, sceneItemId: gradientItem.sceneItemId, sceneItemEnabled: true});
             
             await wait(6000);
-            await obs.call("SetSceneItemEnabled", { sceneName: SCENE_CAMERA, sceneItemId: group.sceneItemId, sceneItemEnabled: false});            
+            await obs.call("SetSceneItemEnabled", { sceneName: SCENE_CAMERA, sceneItemId: nameItem.sceneItemId, sceneItemEnabled: false});
+            await obs.call("SetSceneItemEnabled", { sceneName: SCENE_CAMERA, sceneItemId: gradientItem.sceneItemId, sceneItemEnabled: false});
         }
 
         async function wait(millis: number) {

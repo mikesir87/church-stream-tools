@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState, createContext, FC, ReactNode, useCallback } from "react";
 import OBSWebSocket from 'obs-websocket-js';
 import { SCENE_BLANK, SCENE_CAMERA, SCENE_HYMNS, SCENE_INTRO, SCENE_SACRAMENT_PAUSED, SCENE_THANKS_FOR_JOINING } from "../../consts";
+import { LoginForm } from "./LoginForm";
 
 const obs = new OBSWebSocket();
 
@@ -174,7 +175,11 @@ export const StreamContextProvider : FC<StreamContextProviderProps> = ({ childre
             showIntro, showCamera, showHymn, startSacramentPause, endStream,
             getScreenshot, forceScreenshotCounter, forceScreenshotUpdate, obs,
         }}>
-            { children }
+            { isConnected ? (
+                <>{ children }</>
+            ) : (
+                <LoginForm />
+            )}
         </StreamContext.Provider>
     )
 };
