@@ -1,5 +1,5 @@
 import { FC, useCallback } from "react";
-import { SCENE_CAMERA, SOURCE_SPEAKER_NAME, SOURCE_SPEAKER_NAME_GROUP, SOURCE_SPEAKER_TITLE } from "../../consts";
+import { SCENE_CAMERA, SOURCE_SPEAKER_NAME } from "../../consts";
 import { useStreamProps } from "./StreamContext";
 import { BigButton } from "./BigButton";
 

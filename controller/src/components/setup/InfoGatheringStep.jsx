@@ -1,7 +1,7 @@
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 export function InfoGatheringStep({ onComplete }) {
     const [showHelpModal, setShowHelpModal] = useState(false);
@@ -42,7 +42,7 @@ export function InfoGatheringStep({ onComplete }) {
                 <Modal.Body>
                     <p>To get the stream key, complete the following steps:</p>
                     <ol>
-                        <li>Open <a href="https://studio.youtube.com/" target='_blank'>YouTube Studio</a></li>
+                        <li>Open <a href="https://studio.youtube.com/" target='_blank' rel="noreferrer">YouTube Studio</a></li>
                         <li>Click on the <strong>Go Live</strong> button in the top-right corner</li>
                         <li>Select an existing stream or create a scheduled event for a future stream</li>
                         <li>In the <strong>Stream settings</strong> tab, copy the <strong>Stream key</strong> field</li>

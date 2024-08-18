@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useStreamProps } from "../stream/StreamContext";
 
 export function SceneCollectionCreateStep({ collectionName, onComplete }) {
@@ -28,7 +28,7 @@ export function SceneCollectionCreateStep({ collectionName, onComplete }) {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [needsToDelete, collectionName]);
+    }, [obs, needsToDelete, collectionName]);
 
     useEffect(() => {
         if (!bootstrapped || needsToDelete) return;
@@ -36,7 +36,7 @@ export function SceneCollectionCreateStep({ collectionName, onComplete }) {
         obs.call("CreateSceneCollection", {
             sceneCollectionName: collectionName,
         }).then(() => onComplete());
-    }, [bootstrapped, needsToDelete]);
+    }, [bootstrapped, needsToDelete, obs, collectionName, onComplete]);
 
     return (
         <div>

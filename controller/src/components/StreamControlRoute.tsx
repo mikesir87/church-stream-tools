@@ -14,7 +14,7 @@ export const StreamControlRoute : FC = () => {
                 navigate("/setup");
             }
         })();
-    }, [obs]);
+    }, [obs, navigate]);
 
 
     return (

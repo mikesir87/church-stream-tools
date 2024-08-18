@@ -205,8 +205,6 @@ export function StreamSetupRoute() {
     const { obs } = useStreamProps();
     const [ profileConfig, setProfileConfig ] = useState(null);
 
-    const KEY = "4bkq-98fh-wqwv-xy9y-8v55";
-
     useEffect(() => {
         fetch("/controller/profileConfig.json")
             .then(r => r.json())
