@@ -8,6 +8,9 @@ export const ShowName : FC = () => {
 
     const handleClick = useCallback(() => {
         const name = prompt("What's the person's name?");
+        if (!name)
+            return;
+        
         // const title = prompt("What's the person's title?");
 
         async function run() {
