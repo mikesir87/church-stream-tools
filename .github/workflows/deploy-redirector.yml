@@ -10,7 +10,7 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: create/override config files
         shell: bash
         run: |
@@ -20,7 +20,7 @@ jobs:
         env:
           STREAM_DATA_PASSWORD: ${{secrets.STREAM_DATA_PASSWORD}}
           STREAM_REDIRECT_URL: ${{secrets.STREAM_REDIRECT_URL}}
-      - uses: up9cloud/action-rsync@master
+      - uses: up9cloud/action-rsync@v1.4
         env:
           HOST: ${{secrets.DEPLOY_HOST}}
           KEY: ${{secrets.DEPLOY_SSH_KEY}}

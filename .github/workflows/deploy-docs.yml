@@ -8,18 +8,18 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           key: ${{ github.ref }}
           path: .cache
       - run: pip install mkdocs-material 
       - run: mkdocs build
         working-directory: docs
-      - uses: up9cloud/action-rsync@master
+      - uses: up9cloud/action-rsync@v1.4
         env:
           HOST: ${{secrets.DEPLOY_HOST}}
           KEY: ${{secrets.DEPLOY_SSH_KEY}}

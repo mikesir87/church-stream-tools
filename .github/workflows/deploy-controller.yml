@@ -8,17 +8,17 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: 'yarn'
-          cache-dependency-path: 'controller/yarn.lock'
+          node-version: 22
+          cache: yarn
+          cache-dependency-path: controller/yarn.lock
       - run: yarn install --frozen-lockfile
         working-directory: ./controller
       - run: yarn build
         working-directory: ./controller
-      - uses: up9cloud/action-rsync@master
+      - uses: up9cloud/action-rsync@v1.4
         env:
           HOST: ${{secrets.DEPLOY_HOST}}
           KEY: ${{secrets.DEPLOY_SSH_KEY}}
