@@ -9632,5 +9632,29 @@
                 "extra": "0"
             }
         ]
+    },
+    {
+        "number": "1022",
+        "title": "Faith in Every Footstep",
+        "verses": [
+            {
+                "id": "1022.1",
+                "verse": "1",
+                "text": "A marvelous work has begun to come forth\nAmong all the children of men.\nO ye that embark in the service of God,\nGive heart, mind, and strength unto Him;\nFor prophets have spoken and angels have come\nTo lift the world from sin,\nThat Christ may reign over all the earth\nAnd bless His gathered kin.\n\nWith faith in ev’ry footstep,\nWe follow Christ, the Lord;\nAnd filled with hope through His pure love,\nWe sing with one accord.",
+                "extra": "0"
+            },
+            {
+                "id": "1022.2",
+                "verse": "2",
+                "text": "Those marvelous Saints who embraced this great work\nAnd shared it in lands far and near—\nWho gave all their heart, mind, and strength to the Lord\nWith wisdom and vision so clear—\nNow stand as examples of virtue and faith,\nOf souls prepared to hear,\nOf knowledge sure, born of humble heart,\nAnd love that banished fear.\n\nWith faith in ev’ry footstep,\nWe follow Christ, the Lord;\nAnd filled with hope through His pure love,\nWe sing with one accord.",
+                "extra": "0"
+            },
+            {
+                "id": "1022.3",
+                "verse": "3",
+                "text": "If we now desire to assist in this work\nAnd thrust in our sickle with might,\nIf we will embark in the service of God\nTo harvest in fields that are white,\nOur souls may receive the salvation of God—\nThe fulness of His light—\nThen we may stand, free of sin and blame,\nGod’s glory in our sight.\n\nWith faith in ev’ry footstep,\nWe follow Christ, the Lord;\nAnd filled with hope through His pure love,\nWe sing with one accord.",
+                "extra": "0"
+            }
+        ]
     }
 ]
