@@ -73,7 +73,10 @@ export const StreamContextProvider : FC<StreamContextProviderProps> = ({ childre
     const connect = useCallback((host: string, password: string) => {
         if (isConnected) return;
         obs.connect(host, password)
-            .catch(err => setConnectionError(err.message));
+            .catch(err => {
+                const message = (err.message || "Validate OBS is running and the WebSocket Server is enabled.");
+                setConnectionError("An error has occurred while trying to connect to OBS: " + message);
+            });
     }, [isConnected]);
 
     const showIntro = useCallback(() => {
