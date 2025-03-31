@@ -13,6 +13,8 @@ export const LoginForm = () => {
   const [host, setHost] = useState(localStorage.getItem("stream-controller/host") || "");
   const [password, setPassword] = useState(localStorage.getItem("stream-controller/password") || "");
   const [showHelpModal, setShowHelpModal] = useState(false);
+
+  const isHttps = window.location.protocol === "https:";
   
   const connectCallback = useCallback((e : FormEvent) => {
       e.preventDefault();
@@ -30,6 +32,12 @@ export const LoginForm = () => {
             <Col>
                 <h2>You are not connected to OBS</h2>
                 <p>Provide connection details below to connect to OBS.</p>
+
+                { isHttps && (
+                    <Alert variant="warning">
+                        You are currently connected to the site securely, which means you may not be able to connect to OBS. Please connect to the site using HTTP (<a href={window.location.href.replace("https", "http")}>click here</a>).
+                    </Alert>
+                )}
 
                 <Alert variant="info">
                   Need help finding the login info? <Button variant="link" size="sm" onClick={() => setShowHelpModal(true)}>Click here for additional info</Button>
