@@ -3,11 +3,14 @@ import { useStreamProps } from "./components/stream/StreamContext";
 
 export async function createAndSetupProfile(obs, profileName, youtubeKey) {
     try {
+        console.log("Creating profile", profileName);
         await obs.call("CreateProfile", {
             profileName,
         });
+        console.log("-- Done creating profile");
 
         // Create new profile and configure settings
+        console.log("Setting stream settings");
         await obs.call("SetStreamServiceSettings", {
             streamServiceType: "rtmp_common",
             streamServiceSettings: {
@@ -21,7 +24,9 @@ export async function createAndSetupProfile(obs, profileName, youtubeKey) {
                 stream_key_link: "https://www.youtube.com/live_dashboard"
             }
         });
+        console.log("-- Done setting stream settings");
 
+        console.log("Setting video settings");
         await obs.call("SetVideoSettings", {
             fpsNumerator: 30,
             fpsDenominator: 1,
@@ -30,6 +35,7 @@ export async function createAndSetupProfile(obs, profileName, youtubeKey) {
             outputWidth: 1920,
             outputHeight: 1080,
         });
+        console.log("-- Done setting video settings");
     } catch (e) {
         console.error("Error creating profile", e);
     }
