@@ -6,7 +6,7 @@ import { SceneCollectionCreateStep } from "./SceneCollectionCreateStep";
 import { InfoGatheringStep } from "./InfoGatheringStep";
 import { createAndSetupProfile, createScenes, populateAndConfigureSources } from '../../ObsUtil';
 import { useStreamProps } from '../stream/StreamContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const PROFILE_NAME = "Church stream";
 const SCENE_COLLECTION_NAME = "Church stream";
@@ -16,12 +16,22 @@ export function StreamSetupRoute() {
     const [ step, setStep ] = useState(0);
     const [ profileConfig, setProfileConfig ] = useState(null);
     const [ youTubeKey, setYouTubeKey ] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("/controller/profileConfig.json")
             .then(r => r.json())
             .then(setProfileConfig);
     }, [setProfileConfig]);
+
+    useEffect(() => {
+        (async function() {
+            const { sceneCollections } = await obs.call("GetSceneCollectionList");
+            if (sceneCollections.indexOf("Church stream") > -1) {
+                navigate("/");
+            }
+        })();
+    }, [obs, navigate]);
 
     useEffect(() => {
         if (step !== 1) return;
