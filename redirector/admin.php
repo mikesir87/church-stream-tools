@@ -27,6 +27,7 @@ if (isset($_SESSION["authed"]) && isset($_POST['stream-link'])) {
         file_put_contents("./config/stream-url.php", "<?php define('STREAM_REDIRECT_URL', '$new_stream_link');");
         file_put_contents("./config/data.txt", "Submission list\n");
         header("Location: /admin");
+        clearstatcache();
         exit;
     } else {
         echo "Invalid URL format.";
