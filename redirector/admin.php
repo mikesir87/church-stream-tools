@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require("./config/stream-data-pw.php");
 require("./config/stream-url.php");
 
@@ -11,17 +13,20 @@ if (!defined("STREAM_REDIRECT_URL")) {
     exit("Unable to provide the data due to a system misconfiguration (stream url). Contact the site administrator for assistance");
 }
 
-if (!isset($_GET["secret"]) || $_GET["secret"] != DATA_PASSWORD) {
-	echo "Sorry";
-	exit;
+if (isset($_POST['password'])) {
+    if ($_POST['password'] == DATA_PASSWORD) {
+        $_SESSION["authed"] = true;
+    } else {
+        echo "Invalid password.";
+    }
 }
 
-if (isset($_POST['stream-link'])) {
+if (isset($_SESSION["authed"]) && isset($_POST['stream-link'])) {
     $new_stream_link = $_POST['stream-link'];
     if (filter_var($new_stream_link, FILTER_VALIDATE_URL)) {
         file_put_contents("./config/stream-url.php", "<?php define('STREAM_REDIRECT_URL', '$new_stream_link');");
         file_put_contents("./config/data.txt", "Submission list\n");
-        header("Location: /admin?secret=" . $_GET['secret']);
+        header("Location: /admin");
         exit;
     } else {
         echo "Invalid URL format.";
@@ -51,28 +56,41 @@ $attendance = file_get_contents("./config/data.txt");
       <div class="content-card">
           <h1>Blacksburg Ward Stream - Admin</h1>
 
-          <form method="post" action="/admin?secret=<?= $_GET['secret']; ?>">
+          <?php if (!isset($_SESSION["authed"])): ?>
+            <form method="post" action="/admin">
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required />
+              </div>
+              <button type="submit" class="btn btn-primary mb-3">Login</button>
+            </form>
 
-            <div class="alert alert-info">
-                Current stream link: <a href="<?= STREAM_REDIRECT_URL; ?>" target="_blank"><?= STREAM_REDIRECT_URL; ?></a>.
-            </div>
+          <?php else : ?>
+            <form method="post" action="/admin">
 
-            <div class="mb-3">
-              <label for="stream-link" class="form-label">New stream link</label>
-              <input type="text" class="form-control" id="stream-link" name="stream-link" placeholder="https://youtube.com/live/..." required />
-            </div>
-            <p class="text-muted">Note that setting a new stream link will automatically clear the attendance list.</p>
-            <button type="submit" class="btn btn-primary mb-3">Update stream link</button>
-          </form>
+                <div class="alert alert-info">
+                    Current stream link: <a href="<?= STREAM_REDIRECT_URL; ?>" target="_blank"><?= STREAM_REDIRECT_URL; ?></a>.
+                </div>
+
+                <div class="mb-3">
+                <label for="stream-link" class="form-label">New stream link</label>
+                <input type="text" class="form-control" id="stream-link" name="stream-link" placeholder="https://youtube.com/live/..." required />
+                </div>
+                <p class="text-muted">Note that setting a new stream link will automatically clear the attendance list.</p>
+                <button type="submit" class="btn btn-primary mb-3">Update stream link</button>
+            </form>
+          <?php endif; ?>
         </div>
 
-        <div class="content-card">
-          <h1>Attendance</h1>
+        <?php if (isset($_SESSION["authed"])): ?>
+          <div class="content-card">
+            <h1>Attendance</h1>
 
-          <pre>
-            <?php echo $attendance; ?>
-          </pre>
-        </div>
+            <pre>
+              <?php echo $attendance; ?>
+            </pre>
+          </div>
+        <?php endif; ?>
       </div>
     </div>
   </div>
