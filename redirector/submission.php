@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('America/New_York');
+
 // If they didn't submit the form, redirect them back to the main page
 if (!isset($_POST["name"])) {
 	Header("Location: /");
