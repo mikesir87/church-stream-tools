@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - controller/**
+      - .github/workflows/deploy-controller.yml
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
