@@ -7,7 +7,7 @@ import { StreamContextProvider } from './components/stream/StreamContext';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter basename='/controller'>
+      <BrowserRouter basename="/controller">
         <StreamContextProvider>
           <Routes>
             <Route index element={<StreamControlRoute />} />

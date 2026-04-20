@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from 'react'
 import Container from "react-bootstrap/Container";
 import { useStreamProps } from "./StreamContext";
 import { LiveView } from "./LiveView";

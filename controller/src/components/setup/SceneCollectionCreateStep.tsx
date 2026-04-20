@@ -1,7 +1,13 @@
+import type { FC } from "react";
 import { useEffect, useState } from "react";
 import { useStreamProps } from "../stream/StreamContext";
 
-export function SceneCollectionCreateStep({ collectionName, onComplete }) {
+interface SceneCollectionCreateStepProps {
+    collectionName: string;
+    onComplete: () => void;
+}
+
+export const SceneCollectionCreateStep : FC<SceneCollectionCreateStepProps> = ({ collectionName, onComplete }) => {
     const { obs } = useStreamProps();
     const [needsToDelete, setNeedsToDelete] = useState(false);
     const [bootstrapped, setBootstrapped] = useState(false);

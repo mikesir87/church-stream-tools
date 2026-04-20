@@ -1,13 +1,22 @@
+import type { FC, FormEvent } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
 
-export function InfoGatheringStep({ onComplete }) {
+interface OnCompleteProps {
+    youTubeKey: string
+}
+
+interface InfoGatheringStepProps {
+    onComplete: (settings : OnCompleteProps) => void;
+}
+
+export const InfoGatheringStep : FC<InfoGatheringStepProps> = ({ onComplete }) => {
     const [showHelpModal, setShowHelpModal] = useState(false);
     const [youTubeKey, setYouTubeKey] = useState("");
 
-    const onSubmit = (e) => {
+    const onSubmit = (e: FormEvent) => {
         e.preventDefault();
         onComplete({ youTubeKey});
     };

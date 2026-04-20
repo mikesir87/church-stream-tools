@@ -1,4 +1,5 @@
-import { FC, useEffect } from "react";
+import type { FC } from 'react';
+import { useEffect } from "react";
 import { Dashboard } from "./stream/Dashboard";
 import { useStreamProps } from "./stream/StreamContext";
 import { useNavigate } from "react-router-dom";

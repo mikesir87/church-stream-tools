@@ -1,4 +1,5 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import type { FC } from 'react'
+import { useCallback, useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { useStreamProps } from "./StreamContext";

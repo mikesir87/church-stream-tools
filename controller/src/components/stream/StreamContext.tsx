@@ -1,4 +1,5 @@
-import { useEffect, useContext, useState, createContext, FC, ReactNode, useCallback } from "react";
+import type { FC, ReactNode } from 'react';
+import { useEffect, useContext, useState, createContext, useCallback } from "react";
 import OBSWebSocket from 'obs-websocket-js';
 import { SCENE_BLANK, SCENE_CAMERA, SCENE_HYMNS, SCENE_INTRO, SCENE_SACRAMENT_PAUSED, SCENE_THANKS_FOR_JOINING } from "../../consts";
 import { LoginForm } from "./LoginForm";

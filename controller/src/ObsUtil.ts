@@ -1,7 +1,64 @@
-import { useEffect, useState } from "react";
-import { useStreamProps } from "./components/stream/StreamContext";
+import type OBSWebSocket from "obs-websocket-js";
+import type { JsonObject } from "type-fest";
 
-export async function createAndSetupProfile(obs, profileName, youtubeKey) {
+interface ProfileFilter {
+    name: string;
+    versioned_id: string;
+    settings: JsonObject;
+}
+
+interface ProfileSource {
+    id: string;
+    uuid: string;
+    name: string;
+    versioned_id: string;
+    settings: JsonObject & { items?: ProfileSceneItem[] };
+    filters?: ProfileFilter[];
+}
+
+interface ProfileSceneItem {
+    source_uuid: string;
+    visible: boolean;
+    align?: number;
+    bounds_align?: number;
+    crop_left?: number;
+    crop_right?: number;
+    crop_down?: number;
+    crop_top?: number;
+    pos?: { x: number; y: number };
+    scale?: { x: number; y: number };
+}
+
+interface ProfileConfig {
+    sources: ProfileSource[];
+    scene_order: { name: string }[];
+}
+
+interface SceneId {
+    name: string;
+    uuid: string;
+    oldUuid: string;
+}
+
+interface InputUuidEntry {
+    configUuid: string;
+    createdUuid: string;
+}
+
+interface SceneItemTransform {
+    alignment?: number;
+    boundsAlignment?: number;
+    cropLeft?: number;
+    cropRight?: number;
+    cropDown?: number;
+    cropTop?: number;
+    positionX?: number;
+    positionY?: number;
+    scaleX?: number;
+    scaleY?: number;
+}
+
+export async function createAndSetupProfile(obs: OBSWebSocket, profileName: string, youtubeKey: string | null) {
     try {
         console.log("Creating profile", profileName);
         await obs.call("CreateProfile", {
@@ -9,7 +66,6 @@ export async function createAndSetupProfile(obs, profileName, youtubeKey) {
         });
         console.log("-- Done creating profile");
 
-        // Create new profile and configure settings
         console.log("Setting stream settings");
         await obs.call("SetStreamServiceSettings", {
             streamServiceType: "rtmp_common",
@@ -41,10 +97,10 @@ export async function createAndSetupProfile(obs, profileName, youtubeKey) {
     }
 }
 
-export async function createScenes(obs, profileConfig) {
-    const scenes = [];
+export async function createScenes(obs: OBSWebSocket, profileConfig: ProfileConfig): Promise<SceneId[]> {
+    const scenes: SceneId[] = [];
 
-    const { scenes : currentSceneList } = await obs.call("GetSceneList");
+    const { scenes: currentSceneList } = await obs.call("GetSceneList");
 
     const allScenesConfig = profileConfig.sources
         .filter(s => s.id === "scene");
@@ -53,7 +109,7 @@ export async function createScenes(obs, profileConfig) {
         .map(s => s.name)
         .reverse();
 
-    for (let name of sceneNamesToCreate) {
+    for (const name of sceneNamesToCreate) {
         const sceneConfig = allScenesConfig.find(s => s.name === name);
 
         const matchingScene = currentSceneList.find(s => s.sceneName === name);
@@ -61,8 +117,8 @@ export async function createScenes(obs, profileConfig) {
         if (matchingScene) {
             scenes.push({
                 name,
-                uuid: matchingScene.sceneUuid,
-                oldUuid: sceneConfig.uuid,
+                uuid: matchingScene.sceneUuid as string,
+                oldUuid: sceneConfig!.uuid,
             });
             continue;
         }
@@ -74,24 +130,24 @@ export async function createScenes(obs, profileConfig) {
         scenes.push({
             name,
             uuid: sceneUuid,
-            oldUuid: sceneConfig.uuid,
+            oldUuid: sceneConfig!.uuid,
         });
     }
 
     return scenes;
 }
 
-export async function populateAndConfigureSources(obs, profileConfig, sceneIds) {
-    const inputUuids = [];
+export async function populateAndConfigureSources(obs: OBSWebSocket, profileConfig: ProfileConfig, sceneIds: SceneId[]) {
+    const inputUuids: InputUuidEntry[] = [];
 
     const sceneConfigs = profileConfig.sources
-            .filter(s => s.id === "scene");
+        .filter(s => s.id === "scene");
 
-    for (let sceneId of sceneIds) {
+    for (const sceneId of sceneIds) {
         const sceneConfig = sceneConfigs
             .find(s => s.uuid === sceneId.oldUuid);
 
-        for (let sceneItem of sceneConfig.settings.items) {
+        for (const sceneItem of sceneConfig!.settings.items ?? []) {
             console.log("Creating scene item", sceneItem);
             const sourceConfig = profileConfig.sources
                 .find(s => s.uuid === sceneItem.source_uuid);
@@ -108,7 +164,7 @@ export async function populateAndConfigureSources(obs, profileConfig, sceneIds) 
 
             const existingInput = inputUuids.find(i => i.configUuid === sourceConfig.uuid);
 
-            let inputUuid = null;
+            let inputUuid: number | null = null;
 
             if (existingInput) {
                 const itemCreation = await obs.call("CreateSceneItem", {
@@ -128,15 +184,15 @@ export async function populateAndConfigureSources(obs, profileConfig, sceneIds) 
                 };
 
                 console.log("Creating input", options);
-                const createInputReponse = await obs.call("CreateInput", options);
-                inputUuid = createInputReponse.sceneItemId;
+                const createInputResponse = await obs.call("CreateInput", options);
+                inputUuid = createInputResponse.sceneItemId;
 
                 if (sourceConfig.filters) {
-                    for (let filter of sourceConfig.filters) {
+                    for (const filter of sourceConfig.filters) {
                         console.log("Creating filter", filter);
                         await obs.call("CreateSourceFilter", {
                             sourceName: sourceConfig.name,
-                            sourceUuid: inputUuid,
+                            sourceUuid: String(inputUuid),
                             filterName: filter.name,
                             filterKind: filter.versioned_id,
                             filterSettings: filter.settings,
@@ -146,7 +202,7 @@ export async function populateAndConfigureSources(obs, profileConfig, sceneIds) 
 
                 inputUuids.push({
                     configUuid: sourceConfig.uuid,
-                    createdUuid: createInputReponse.inputUuid,
+                    createdUuid: createInputResponse.inputUuid,
                 });
             }
 
@@ -155,8 +211,8 @@ export async function populateAndConfigureSources(obs, profileConfig, sceneIds) 
                 await obs.call("SetSceneItemTransform", {
                     sceneName: sceneId.name,
                     sceneUuid: sceneId.uuid,
-                    sceneItemId: inputUuid,
-                    sceneItemTransform: transform
+                    sceneItemId: inputUuid!,
+                    sceneItemTransform: transform as JsonObject
                 });
             }
 
@@ -165,17 +221,16 @@ export async function populateAndConfigureSources(obs, profileConfig, sceneIds) 
                 await obs.call("SetSceneItemEnabled", {
                     sceneName: sceneId.name,
                     sceneUuid: sceneId.uuid,
-                    sceneItemId: inputUuid,
+                    sceneItemId: inputUuid!,
                     sceneItemEnabled: false,
                 });
-            
             }
         }
     }
 }
 
-function createTransform(sceneItem) {
-    const transform = {};
+function createTransform(sceneItem: ProfileSceneItem): SceneItemTransform | null {
+    const transform: SceneItemTransform = {};
 
     if (sceneItem.align)
         transform.alignment = sceneItem.align;
@@ -185,7 +240,7 @@ function createTransform(sceneItem) {
     if (sceneItem.crop_left)
         transform.cropLeft = sceneItem.crop_left;
     if (sceneItem.crop_right)
-        transform.crop_right = sceneItem.crop_right
+        transform.cropRight = sceneItem.crop_right;
     if (sceneItem.crop_down)
         transform.cropDown = sceneItem.crop_down;
     if (sceneItem.crop_top)
@@ -204,49 +259,4 @@ function createTransform(sceneItem) {
     }
 
     return transform;
-}
-
-
-export function StreamSetupRoute() {
-    const { obs } = useStreamProps();
-    const [ profileConfig, setProfileConfig ] = useState(null);
-
-    useEffect(() => {
-        fetch("/controller/profileConfig.json")
-            .then(r => r.json())
-            .then(setProfileConfig);
-    }, [setProfileConfig]);
-
-    useEffect(() => {
-        if (!profileConfig) return;
-
-        (async function () {
-            // await setupProfile(obs, KEY);
-            // await obs.call("CreateSceneCollection", {
-            //     sceneCollectionName: "Church stream"
-            // });
-
-            // const sceneIds = await createScenes(obs, profileConfig);
-            // console.log("Scene ids", sceneIds);
-
-            // await createSources(obs, profileConfig, sceneIds);
-            
-            // const { scenes } = await obs.call("GetSceneList");
-            // if (scenes.find(s => s.sceneName === "Scene")) {
-            //     await obs.call("RemoveScene", {
-            //         sceneName: "Scene"
-            //     });
-            // }
-
-            const settings = await obs.call("GetOutputList");
-            console.log("Output list", settings);
-        })();
-    }, [obs, profileConfig]);
-
-    return (
-        <div>
-            <h1>Stream Setup</h1>
-            <p>Stream setup page</p>
-        </div>
-    );
 }

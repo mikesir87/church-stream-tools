@@ -1,4 +1,5 @@
-import { FC, useCallback } from "react";
+import type { FC } from 'react'
+import { useCallback } from "react";
 import { useStreamProps } from "./StreamContext";
 import { BigButton } from "./BigButton";
 

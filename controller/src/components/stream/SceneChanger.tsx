@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from 'react'
 import Row from "react-bootstrap/Row";
 import { SCENE_CAMERA, SCENE_HYMNS, SCENE_INTRO, SCENE_SACRAMENT_PAUSED } from "../../consts";
 import { useStreamProps } from "./StreamContext";

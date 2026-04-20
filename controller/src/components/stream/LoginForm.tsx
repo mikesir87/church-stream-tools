@@ -1,4 +1,5 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import type { FormEvent } from 'react'
+import { useCallback, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
@@ -18,11 +19,13 @@ export const LoginForm = () => {
   
   const connectCallback = useCallback((e : FormEvent) => {
       e.preventDefault();
+
       let hostToUse = (host.indexOf(":") > -1) ? `[${host}]` : host;
       connect(`ws://${hostToUse}:4455`, password);
   }, [host, password, connect]);
-
+ 
   useEffect(() => { if (host) localStorage.setItem("stream-controller/host", host) }, [host]);
+
   useEffect(() => { if (password) localStorage.setItem("stream-controller/password", password) }, [password]);
 
   return (

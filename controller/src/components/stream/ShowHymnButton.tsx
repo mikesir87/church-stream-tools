@@ -1,4 +1,5 @@
-import { FC, FormEvent, useCallback, useState } from "react";
+import type { FC, FormEvent } from 'react';
+import { useCallback, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";

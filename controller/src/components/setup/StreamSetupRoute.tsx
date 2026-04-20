@@ -1,3 +1,4 @@
+import type { FC } from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,11 +12,11 @@ import { Link, useNavigate } from 'react-router-dom';
 const PROFILE_NAME = "Church stream";
 const SCENE_COLLECTION_NAME = "Church stream";
 
-export function StreamSetupRoute() {
+export const StreamSetupRoute : FC = () => {
     const { obs } = useStreamProps();
     const [ step, setStep ] = useState(0);
     const [ profileConfig, setProfileConfig ] = useState(null);
-    const [ youTubeKey, setYouTubeKey ] = useState(null);
+    const [ youTubeKey, setYouTubeKey ] = useState<null | string>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -101,7 +102,7 @@ export function StreamSetupRoute() {
                                 <ol>
                                     <li>Double click the <strong>Camera input</strong> source and select the proper camera</li>
                                     <li>Double click the <strong>Church audio input</strong> source and select the proper audio input</li>
-                                    <li>Update YouTube streaming output to use the following settings (Settings -> Output):
+                                    <li>Update YouTube streaming output to use the following settings (Settings -&gt; Output):
                                         <ol>
                                             <li>Video bitrate: 3758 Kbps</li>
                                             <li>Audio bitrate: 160</li>
@@ -121,6 +122,6 @@ export function StreamSetupRoute() {
     );
 }
 
-async function wait(ms) {
+async function wait(ms : number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
